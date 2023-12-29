@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
+    <style>
+      body {
+        font-family: "Arial", "Helvetica", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+        text-align: center;
+        transition: background-color 0.5s ease-in-out;
+      }
+
+      header {
+        background-color: #394240;
+        color: #ffffff;
+        padding: 1em;
+        font-size: 1.5em;
+        transition: background-color 0.5s ease-in-out;
+      }
+
+      main {
+        display: flex;
+        justify-content: space-around;
+        padding: 1em;
+      }
+
+      .box {
+        width: 30%;
+        background-color: #ffffff;
+        padding: 1.5em;
+        border-radius: 12px;
+        transition: background-color 0.3s ease-in-out,
+          box-shadow 0.3s ease-in-out;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+      }
+
+      .box:hover {
+        background-color: #f0f0f0;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        color: #394240;
+        margin-bottom: 15px;
+        transition: color 0.3s ease-in-out;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin: 12px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+        background-color: #fff;
+        border-radius: 8px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      li:hover {
+        background-color: #e0e0e0;
+      }
+
+      .completed {
+        text-decoration: line-through;
+        color: #888;
+      }
+
+      button {
+        padding: 8px 16px;
+        background-color: #394240;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #57666e;
+      }
+
+      input {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: border-color 0.3s ease-in-out;
+      }
+
+      input:focus {
+        border-color: #394240;
+      }
+
+      .error {
+        color: red;
+        margin-top: 15px;
+      }
+
+      footer {
+        background-color: #394240;
+        color: #ffffff;
+        padding: 1em;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>To-Do App</h1>
+    </header>
+    <main>
+      <div class="box">
+        <h2>Add Task💻</h2>
+        <input type="text" id="taskInput" placeholder="Enter task" />
+        <button onclick="addTask()">Add</button>
+        <p class="error" id="errorText"></p>
+      </div>
+      <div class="box" padding="">
+        <h2>Pending Tasks😊</h2>
+        <ul id="pendingList"></ul>
+      </div>
+      <div class="box">
+        <h2>Completed Tasks🥳</h2>
+        <ul id="completedList"></ul>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2023 To-Do App | Created by GTR💖</p>
+    </footer>
+
+    <script>
+      function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const errorText = document.getElementById("errorText");
+
+        if (taskInput.value.trim() === "") {
+          errorText.textContent = "Task cannot be empty";
+          return;
+        }
+
+        errorText.textContent = "";
+
+        const pendingList = document.getElementById("pendingList");
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${taskInput.value}</span><button onclick="completeTask(this)">Complete</button><button onclick="deleteTask(this)">Delete</button>`;
+        pendingList.appendChild(li);
+
+        taskInput.value = "";
+      }
+
+      function completeTask(button) {
+        const completedList = document.getElementById("completedList");
+        const li = button.parentElement;
+        li.removeChild(button);
+        li.classList.add("completed");
+        completedList.appendChild(li);
+      }
+
+      function deleteTask(button) {
+        const li = button.parentElement;
+        li.parentElement.removeChild(li);
+      }
+    </script>
+  </body>
+</html>
